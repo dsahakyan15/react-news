@@ -61,6 +61,16 @@ export default class RegisterPage extends Component {
                             onChange={this.handleChange}
                         />
                     </div>
+                    <div className="register-input">
+                        <label htmlFor="avatar">Image:</label>
+                        <input
+                            type="file"
+                            name="avatar"
+                            id="avatar"
+                            onChange={this.handleChange}
+                        />
+                    </div>
+
                     <button
                         className="register-btn"
                         onClick={this.handleRegister}

@@ -1,6 +1,7 @@
 import { Component } from "react";
 import './App.css'
 import RegisterPage from "../RegisterPage/RegisterPage";
+import UserPage from "../UserPage/UserPage"
 
 
 class App extends Component {
@@ -8,35 +9,35 @@ class App extends Component {
         username: '',
         email: '',
         password: '',
-        regStatus:false
+        regStatus: false
     }
 
     isRegistered = (username, email, password) => {
         this.setState(() => {
-            return { 
-                username:username,
-                email:email, 
-                password:password,
-                regStatus:true
+            return {
+                username: username,
+                email: email,
+                password: password,
+                regStatus: true
             }
         })
-        console.log(username,email,password)
+        console.log(username, email, password)
         console.log(this.state)
 
-        this.setState({
-            username: '',
-            email: '',
-            password: ''
-        })
     }
 
     render() {
         console.log("app")
         return (
             <div>
-                <RegisterPage
-                    isRegistered={this.isRegistered}
-                    stateNow={this.state} />
+                {this.state.regStatus ?
+                    <UserPage 
+                    date={this.state}/>
+                    :
+                    <RegisterPage
+                        isRegistered={this.isRegistered}
+                        stateNow={this.state} />
+                }
             </div>)
     }
 }
