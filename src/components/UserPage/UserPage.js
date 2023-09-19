@@ -5,9 +5,10 @@ import './UserPage.css'
 export default class UserPage extends Component {
     render() {
 
-        const { username, email, password } = this.props.date
-        
-        return (<div className="user-page-wrapper">
+        const { username, email, password } = this.props.userData
+
+        return (
+        <div className="user-page-wrapper">
             <h1>User page</h1>
             <div className="username">
                 <h3>Username:</h3><span>{username}</span>
@@ -18,6 +19,7 @@ export default class UserPage extends Component {
             <div className="password">
                 <h3>Password</h3><span>{password}</span>
             </div>
-        </div>)
+        </div>
+        )
     }
 }

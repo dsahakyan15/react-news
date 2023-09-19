@@ -1,29 +1,71 @@
 import { Component } from "react";
 import './registerPage.css'
-
-export default class RegisterPage extends Component {
+export default class RergisterPage extends Component {
     state = {
-        username: this.props.stateNow.username,
-        email: this.props.stateNow.email,
-        password: this.props.stateNow.password
+        username: '',
+        email: '',
+        password: '',
+        image: '',
+        validationErrors: {}
     }
-
-
-
+    validateEmail = (email) => {
+        const regexE = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+        if (regexE.test(email)) {
+            console.log('tested')
+            return true
+        }
+        console.log('dfdgaad')
+        return false
+    }
+    validatePassword = (password) => {
+        return false
+    }
     handleChange = (event) => {
         const { name, value } = event.target;
         this.setState({ [name]: value })
     }
     handleRegister = () => {
         const { username, email, password } = this.state;
-        console.log(username, email, password, ' --- data');
-        console.log(this.state,'--- state of 2')
-        this.props.isRegistered(username, email, password)
+        const validationErrors = {}
+        console.log('dd')
+        if (!email.trim() && !this.validateEmail(email)) {
+            validationErrors.email = 'Please enter a valid email.'
+        }
+        if (!password.trim() && !this.validatePassword(password)) {
+            validationErrors.password = 'Password must contain letters, numbers and bet at least 6 characters long.'
+        }
+        if (username.trim().length < 3) {
+            validationErrors.username = 'Username is required.'
+        }
+        if (Object.keys(validationErrors).length === 0) {
+            this.props.handleRegistration({ username, email, password })
+            localStorage.setItem('userData', JSON.stringify({ username, email, password }));
+            this.setState({
+                username: '',
+                email: '',
+                password: '',
+                validationErrors: {}
+            })
+        } else {
+            this.setState({ validationErrors })
+        }
+    }
+    handleLocalCheck = (key) => {
+        if (localStorage.getItem(key) != null) {
+            return JSON.parse(localStorage.getItem(key))
+        } else {
+            localStorage.setItem(key, JSON.stringify({
+                username: '',
+                email: '',
+                password: ''
+            }))
 
+            return JSON.parse(localStorage.getItem(key))
+        }
     }
     render() {
-        console.log("2")
-        const { username, email, password } = this.state;
+        // const { } = this.handleLocalCheck('userData')
+        const { username, email, password, validationErrors } = this.state;
         return (
             <div className="register-page-wrapper">
                 <h1>Register page</h1>
@@ -62,15 +104,27 @@ export default class RegisterPage extends Component {
                         />
                     </div>
                     <div className="register-input">
-                        <label htmlFor="avatar">Image:</label>
-                        <input
-                            type="file"
-                            name="avatar"
-                            id="avatar"
-                            onChange={this.handleChange}
-                        />
-                    </div>
+                        <label htmlFor="image">Image:</label>
 
+                        {this.state.image ?
+                            <img alt="" src={this.state.image} /> : <input
+                                type="file"
+                                name="image"
+
+                                id="image"
+                                onChange={this.handleChange}
+                            />
+                        }
+                    </div>
+                    {
+                        Object.keys(validationErrors).length ? (
+                            <div className="error-alert">
+                                <span>{validationErrors.email}</span>
+                                <span>{validationErrors.password}</span>
+                                <span>{validationErrors.username}</span>
+                            </div>
+                        ) : null
+                    }
                     <button
                         className="register-btn"
                         onClick={this.handleRegister}

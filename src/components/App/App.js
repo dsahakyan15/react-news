@@ -6,37 +6,31 @@ import UserPage from "../UserPage/UserPage"
 
 class App extends Component {
     state = {
-        username: '',
-        email: '',
-        password: '',
-        regStatus: false
+        userData: {},
+        isRegistered: false
     }
 
-    isRegistered = (username, email, password) => {
-        this.setState(() => {
-            return {
-                username: username,
-                email: email,
-                password: password,
-                regStatus: true
-            }
+    handleRegistration = (userData) => {
+        this.setState({
+            userData,
+            isRegistered: true
         })
-        console.log(username, email, password)
-        console.log(this.state)
 
     }
 
     render() {
-        console.log("app")
+        const { userData, isRegistered } = this.state
+
         return (
-            <div>
-                {this.state.regStatus ?
-                    <UserPage 
-                    date={this.state}/>
-                    :
-                    <RegisterPage
-                        isRegistered={this.isRegistered}
-                        stateNow={this.state} />
+            <div className="app">
+                {
+                    isRegistered ?
+                        <UserPage
+                            userData={userData} />
+                        :
+                        <RegisterPage
+                            handleRegistration={this.handleRegistration}
+                        />
                 }
             </div>)
     }
