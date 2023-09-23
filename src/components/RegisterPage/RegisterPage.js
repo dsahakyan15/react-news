@@ -20,15 +20,16 @@ export default class RergisterPage extends Component {
     validatePassword = (password) => {
         return false
     }
-    handleChange = (event) => {
+    handleChange = (event) => {       
         const { name, value } = event.target;
         this.setState({ [name]: value })
     }
     handleRegister = () => {
         const { username, email, password } = this.state;
         const validationErrors = {}
-        console.log('dd')
+        console.log(this.state)
         if (!email.trim() && !this.validateEmail(email)) {
+            {debugger}
             validationErrors.email = 'Please enter a valid email.'
         }
         if (!password.trim() && !this.validatePassword(password)) {
