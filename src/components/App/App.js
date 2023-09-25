@@ -4,13 +4,13 @@ import LocalStorageService from "../../services/LocalStorageService";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import UserPage from "../UserPage/UserPage"
 import DarkThemeToggle from "../DarkThemeToggle/DarkThemeToggle";
+import Test1 from "../Test1/Test1";
 import ForTest from "../ForTest/ForTest";
 
 function App() {
     const storedData = LocalStorageService.getUserData()
     const [userData, setUserData] = useState(storedData)
     const [isRegistered, setIsRegistered] = useState(!!storedData)
-    const [darkMode,setDarkMode] = useState(false)
 
     const handleRegistration = (userData) => {
         LocalStorageService.saveUserData(userData)
@@ -18,24 +18,22 @@ function App() {
         setUserData(userData)
         setIsRegistered(true)
     }
-    const changeBg = () => {
-        setDarkMode(!darkMode)
-    }
-    if(darkMode){
-        document.body.classList.toggle('dark')
-    }
+    
     return (
         <div className={"app"}>
             {/* {<ForTest/>} */}
-            <DarkThemeToggle changeBg={changeBg}/>
+            {<DarkThemeToggle/>}
+            <Test1>
+                <h1>asenq te mi ban</h1>
+            </Test1>
             {
-                isRegistered ?
-                    <UserPage
-                        userData={userData} />
-                    :
-                    <RegisterPage
-                        handleRegistration={handleRegistration}
-                    />
+                // isRegistered ?
+                //     <UserPage
+                //         userData={userData} />
+                //     :
+                //     <RegisterPage
+                //         handleRegistration={handleRegistration}
+                //     />
             }
         </div>)
 }
