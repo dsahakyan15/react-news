@@ -1,7 +1,7 @@
 import {Card} from 'react-bootstrap'
 
 
-export default function Cardik(props){
+export default function NewsCard(props){
     return (
         <Card className='mb-4'>
             <Card.Img variant='top' src={props.img} />
